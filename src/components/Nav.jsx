@@ -2,11 +2,14 @@ import React, { useState } from 'react'
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import logo from '../img/logo.svg';
-
+import { useHistory } from 'react-router-dom';
 import { fetchSearch } from '../actions';
 import { useDispatch } from 'react-redux';
 
+import Links from './Links';
+
 function Nav() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [textInput, setTextInput] = useState('');
 
@@ -18,14 +21,17 @@ function Nav() {
     e.preventDefault();
     dispatch(fetchSearch(textInput));
     setTextInput('');
+    history.push('/searched');
   }
 
   const clearSearched = () => {
     dispatch({ type: 'CLEAR_SEARCHED' });
+    history.push('/');
   }
 
   return (
     <StyledNav>
+      <Links />
       <Logo onClick={clearSearched}>
         <img src={logo} alt="logo" />
         <h1>Ignite</h1>
@@ -34,13 +40,12 @@ function Nav() {
         <input type="text" onChange={inputHandler} value={textInput} />
         <button onClick={submitHandler} type='submit'>Search</button>
       </form>
-
     </StyledNav>
   )
 }
 
 const StyledNav = styled(motion.div)`
-  padding: 3rem 5rem;
+  padding: 3rem 5rem 1rem 5rem;
   text-align: center;
   input{
     width: 30%;

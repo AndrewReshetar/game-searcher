@@ -26,6 +26,7 @@ function Game({ name, released, id, image }) {
 }
 
 const StyledGame = styled(motion.div)`
+  margin: 0 0 40px 0;
   min-height:30vh;
   box-shadow: 0px 5px 20px rgba(0,0,0,0.4);
   text-align: center;

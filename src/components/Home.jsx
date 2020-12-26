@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import GameDetail from '../components/GameDetail';
 
+import { Switch, Route } from 'react-router-dom';
+
 import { useLocation } from 'react-router-dom';
 
 const Home = () => {
@@ -17,7 +19,7 @@ const Home = () => {
     dispatch(loadGames())
   }, [dispatch])
 
-  const { popular, newGames, upcoming, searched } = useSelector(state => state.games);
+  const { popular, newGames, upcoming, searched, random } = useSelector(state => state.games);
 
 
 
@@ -34,24 +36,44 @@ const Home = () => {
           </Games>
         </div>
       ) : ''}
-      <h2>Upcoming Games</h2>
-      <Games>
-        {upcoming.map(game => {
-          return <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />
-        })}
-      </Games>
-      <h2>Popular Games</h2>
-      <Games>
-        {popular.map(game => {
-          return <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />
-        })}
-      </Games>
-      <h2>New Games</h2>
-      <Games>
-        {newGames.map(game => {
-          return <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />
-        })}
-      </Games>
+
+      <Switch>
+        <Route path='/' exact>
+          <h2>Random Games</h2>
+          <Games>
+            {random.map(game => {
+              return <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />
+            })}
+          </Games>
+        </Route>
+
+        <Route path='/upcoming' >
+          <h2>Upcoming Games</h2>
+          <Games>
+            {upcoming.map(game => {
+              return <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />
+            })}
+          </Games>
+        </Route>
+
+        <Route path='/popular'>
+          <h2>Popular Games</h2>
+          <Games>
+            {popular.map(game => {
+              return <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />
+            })}
+          </Games>
+        </Route>
+
+        <Route path='/new'>
+          <h2>New Games</h2>
+          <Games>
+            {newGames.map(game => {
+              return <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />
+            })}
+          </Games>
+        </Route>
+      </Switch>
     </GameList>
   )
 }
