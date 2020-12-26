@@ -39,7 +39,6 @@ const Home = () => {
 
       <Switch>
         <Route path='/' exact>
-          <h2>Random Games</h2>
           <Games>
             {random.map(game => {
               return <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />
