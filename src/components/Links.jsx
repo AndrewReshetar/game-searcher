@@ -16,6 +16,9 @@ function Links() {
         <li>
           <NavLink to='/new' activeStyle={{ color: 'red ', opacity: .6 }}>New</NavLink>
         </li>
+        <li>
+          <button style={{ backgroundColor: 'lightblue' }}>Log In</button>
+        </li>
       </ul>
     </StyledLink>
   )
@@ -28,6 +31,7 @@ const StyledLink = styled(motion.div)`
   ul{
     display:flex;
     justify-content: flex-end;
+    align-items: center;
     list-style-type:none;
     li{
       margin-right: 2%;
@@ -40,6 +44,9 @@ const StyledLink = styled(motion.div)`
         &:hover{
           opacity: .5;
         }
+      }
+      button{
+        margin-left: 2rem;
       }
     }
   }

@@ -28,7 +28,7 @@ const Home = () => {
       {pathId && <GameDetail />}
       {searched.length ? (
         <div className="searched">
-          <h2>Searched Games</h2>
+          {/* <h2>Searched Games</h2> */}
           <Games>
             {searched.map(game => {
               return <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />
@@ -46,8 +46,8 @@ const Home = () => {
           </Games>
         </Route>
 
-        <Route path='/upcoming' >
-          <h2>Upcoming Games</h2>
+        <Route path='/upcoming'>
+          {/* <h3>Upcoming Games</h3> */}
           <Games>
             {upcoming.map(game => {
               return <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />
@@ -56,7 +56,7 @@ const Home = () => {
         </Route>
 
         <Route path='/popular'>
-          <h2>Popular Games</h2>
+          {/* <h3>Popular Games</h3> */}
           <Games>
             {popular.map(game => {
               return <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />
@@ -65,7 +65,7 @@ const Home = () => {
         </Route>
 
         <Route path='/new'>
-          <h2>New Games</h2>
+          {/* <h3>New Games</h3> */}
           <Games>
             {newGames.map(game => {
               return <Game key={game.id} name={game.name} released={game.released} id={game.id} image={game.background_image} />
