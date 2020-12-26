@@ -1,9 +1,62 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { signIn, signOut } from '../actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Links() {
+  const [userName, setUserName] = useState('');
+  const [auth2, setAuth2] = useState(null);
+  const dispatch = useDispatch();
+  const store = useSelector(state => state.auth);
+
+  useEffect(() => {
+    const onAuthChange = (isSignedIn) => {
+      if (isSignedIn) {
+        dispatch(signIn(userName));
+      } else {
+        dispatch(signOut());
+      }
+    }
+    window.gapi.load('client:auth2', () => {
+      window.gapi.client.init({
+        clientId: '538795503303-us86c6m723p1re7cnjlo4b5ic5hc2n14.apps.googleusercontent.com',
+        scope: 'email profile'
+      }).then(() => {
+        const auth = window.gapi.auth2.getAuthInstance();
+        setAuth2(auth);
+        onAuthChange(auth.isSignedIn.get());
+        auth.isSignedIn.listen(onAuthChange);
+        setUserName(auth.currentUser.get().getBasicProfile().getGivenName());
+      })
+    })
+  }, [dispatch, userName]);
+
+  const onSignInClick = () => {
+    auth2.signIn();
+  }
+
+  const onSignOutClick = () => {
+    auth2.signOut()
+  }
+
+  const renderAuthButton = () => {
+    if (store.isSignedIn) {
+      return (
+        <button onClick={onSignOutClick} className="googleButton" style={{ backgroundColor: 'lightblue' }}>
+          Sign Out
+        </button>
+      )
+    } else {
+      return (
+        <button onClick={onSignInClick} className="googleButton" style={{ backgroundColor: 'lightblue' }}>
+          Sign In
+        </button>
+      )
+    }
+  }
+
   return (
     <StyledLink>
       <ul>
@@ -17,7 +70,7 @@ function Links() {
           <NavLink to='/new' activeStyle={{ color: 'red ', opacity: .6 }}>New</NavLink>
         </li>
         <li>
-          <button style={{ backgroundColor: 'lightblue' }}>Log In</button>
+          {renderAuthButton()}
         </li>
       </ul>
     </StyledLink>

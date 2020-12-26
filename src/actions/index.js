@@ -45,3 +45,18 @@ export const fetchSearch = (game_name) => async dispatch => {
     }
   })
 }
+
+
+//google 
+export const signIn = (username) => {
+  return {
+    type: 'SIGN_IN',
+    payload: username
+  }
+}
+
+export const signOut = () => {
+  return {
+    type: 'SIGN_OUT'
+  }
+}
