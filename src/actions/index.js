@@ -48,10 +48,10 @@ export const fetchSearch = (game_name) => async dispatch => {
 
 
 //google 
-export const signIn = (username) => {
+export const signIn = (name) => {
   return {
     type: 'SIGN_IN',
-    payload: username
+    payload: name
   }
 }
 

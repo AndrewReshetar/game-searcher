@@ -44,6 +44,7 @@ const GlobalStyles = createGlobalStyle`
   img{
     display:block;
   }
+
 `
 
 export default GlobalStyles;

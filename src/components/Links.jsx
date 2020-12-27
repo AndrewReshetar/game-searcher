@@ -8,19 +8,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function Links() {
   const history = useHistory();
+
+
   const [userName, setUserName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [auth2, setAuth2] = useState(null);
+
+
   const dispatch = useDispatch();
+
   const store = useSelector(state => state.auth);
+
   useEffect(() => {
-    const onAuthChange = (isSignedIn) => {
-      if (isSignedIn) {
-        dispatch(signIn(userName));
-      } else {
-        dispatch(signOut());
-      }
-    }
     window.gapi.load('client:auth2', () => {
       window.gapi.client.init({
         clientId: '538795503303-us86c6m723p1re7cnjlo4b5ic5hc2n14.apps.googleusercontent.com',
@@ -36,8 +35,16 @@ function Links() {
         }
       })
     })
+    const onAuthChange = (isSignedIn) => {
+      if (isSignedIn) {
+        dispatch(signIn(userName));
+      } else {
+        dispatch(signOut());
+      }
+    }
+  }, [userName, dispatch]);
 
-  }, [dispatch, userName]);
+
 
   const onSignInClick = () => {
     auth2.signIn();
@@ -66,7 +73,7 @@ function Links() {
 
   const renderedAva = () => {
     return (
-      <li style={{ marginRight: '24rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <li className="avatar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <img src={imageUrl} alt={userName} style={{ borderRadius: '50%', width: '25%', height: '25%' }} />
         <p style={{
           fontSize: '1em', paddingLeft: '10px', color: 'tomato'
@@ -128,6 +135,14 @@ const StyledLink = styled(motion.div)`
       button{
         margin-left: 2rem;
       }
+    }
+  }
+
+  @media screen and (max-width: 375px){
+    width: 82%;
+    margin-left: 72%;
+    ul{
+      justify-content: flex-end;
     }
   }
 

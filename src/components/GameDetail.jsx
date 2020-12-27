@@ -105,6 +105,7 @@ const CardShadow = styled(motion.div)`
   &::-webkit-scrollbar-track{
     background: white;
   }
+  
 `
 const Detail = styled(motion.div)`
   width: 80%;
@@ -117,6 +118,16 @@ const Detail = styled(motion.div)`
   img{
     width: 100%;
   }
+
+  @media screen and (max-width: 768px){
+    width: 90%;
+    left: 5%;
+  }
+
+  @media screen and (max-width: 375px){
+    width: 50%;
+    left: 8%;
+  }
 `
 
 const Stats = styled(motion.div)`
@@ -127,6 +138,14 @@ const Stats = styled(motion.div)`
     width:2rem;
     height: 2rem;
     display:inline;
+  }
+
+  @media screen and (max-width: 768px){
+    img{
+    width:1rem;
+    height: 1rem;
+    display:inline;
+  }
   }
 `
 
@@ -140,6 +159,12 @@ const Platforms = styled(motion.div)`
  img{
    margin-left: 3rem;
  }
+
+ @media screen and (max-width: 768px){
+  img{
+   margin-left: 1rem;
+   }
+  }
 `
 
 const Media = styled(motion.div)`

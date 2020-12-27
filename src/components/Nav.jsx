@@ -42,7 +42,7 @@ function Nav() {
       </Logo>
       <form className="search">
         <input type="text" onChange={inputHandler} value={textInput} disabled={blockedBtn} />
-        <button onClick={submitHandler} type='submit' disabled={blockedBtn}>Search</button>
+        <button className='searchButton' onClick={submitHandler} type='submit' disabled={blockedBtn}>Search</button>
       </form>
     </StyledNav>
   )
@@ -68,6 +68,27 @@ const StyledNav = styled(motion.div)`
     color: white;
   }
 
+  @media screen and (max-width: 768px){
+    input{
+    width: 100%;
+    font-size:1.5rem;
+    }
+    button.searchButton{
+    width: 50%;
+    margin-top: 20px;
+  }
+  }
+
+  @media screen and (max-width: 375px){
+    input{
+    width: 100vw;
+    }
+    button.searchButton{
+    width: 80%;
+    margin-left: 100px;
+  }
+  }
+
 `
 
 const Logo = styled(motion.div)`
@@ -78,6 +99,10 @@ const Logo = styled(motion.div)`
   img{
     height:2rem;
     width:2rem;
+  }
+
+  @media screen and (max-width: 375px){
+    margin-left:75%;
   }
 `
 
