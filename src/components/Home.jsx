@@ -20,9 +20,6 @@ const Home = () => {
   }, [dispatch])
 
   const { popular, newGames, upcoming, searched, random } = useSelector(state => state.games);
-
-
-
   return (
     <GameList>
       {pathId && <GameDetail />}

@@ -5,10 +5,12 @@ import logo from '../img/logo.svg';
 import { useHistory } from 'react-router-dom';
 import { fetchSearch } from '../actions';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Links from './Links';
 
 function Nav() {
+  const store = useSelector(state => state.auth);
   const history = useHistory();
   const dispatch = useDispatch();
   const [textInput, setTextInput] = useState('');
@@ -29,6 +31,8 @@ function Nav() {
     history.push('/');
   }
 
+  const blockedBtn = store.isSignedIn ? '' : 'disabled';
+
   return (
     <StyledNav>
       <Links />
@@ -37,8 +41,8 @@ function Nav() {
         <h1>Ignite</h1>
       </Logo>
       <form className="search">
-        <input type="text" onChange={inputHandler} value={textInput} />
-        <button onClick={submitHandler} type='submit'>Search</button>
+        <input type="text" onChange={inputHandler} value={textInput} disabled={blockedBtn} />
+        <button onClick={submitHandler} type='submit' disabled={blockedBtn}>Search</button>
       </form>
     </StyledNav>
   )

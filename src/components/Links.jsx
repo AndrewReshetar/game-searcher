@@ -3,14 +3,16 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { signIn, signOut } from '../actions';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 function Links() {
+  const history = useHistory();
   const [userName, setUserName] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   const [auth2, setAuth2] = useState(null);
   const dispatch = useDispatch();
   const store = useSelector(state => state.auth);
-
   useEffect(() => {
     const onAuthChange = (isSignedIn) => {
       if (isSignedIn) {
@@ -28,9 +30,13 @@ function Links() {
         setAuth2(auth);
         onAuthChange(auth.isSignedIn.get());
         auth.isSignedIn.listen(onAuthChange);
-        setUserName(auth.currentUser.get().getBasicProfile().getGivenName());
+        if (auth.isSignedIn.get() === true) {
+          setUserName(auth.currentUser.get().getBasicProfile().getGivenName());
+          setImageUrl(auth.currentUser.get().getBasicProfile().getImageUrl());
+        }
       })
     })
+
   }, [dispatch, userName]);
 
   const onSignInClick = () => {
@@ -39,6 +45,34 @@ function Links() {
 
   const onSignOutClick = () => {
     auth2.signOut()
+    history.push('/');
+  }
+
+  const renderedLinks = () => {
+    return (
+      <>
+        <li>
+          <NavLink to='/upcoming' activeStyle={{ color: 'red ', opacity: .6 }}>Upcoming</NavLink>
+        </li>
+        <li>
+          <NavLink to='/popular' activeStyle={{ color: 'red ', opacity: .6 }}>Popular</NavLink>
+        </li>
+        <li>
+          <NavLink to='/new' activeStyle={{ color: 'red ', opacity: .6 }}>New</NavLink>
+        </li>
+      </>
+    )
+  }
+
+  const renderedAva = () => {
+    return (
+      <li style={{ marginRight: '24rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <img src={imageUrl} alt={userName} style={{ borderRadius: '50%', width: '25%', height: '25%' }} />
+        <p style={{
+          fontSize: '1em', paddingLeft: '10px', color: 'tomato'
+        }}>{userName}</p>
+      </li>
+    )
   }
 
   const renderAuthButton = () => {
@@ -60,20 +94,13 @@ function Links() {
   return (
     <StyledLink>
       <ul>
-        <li>
-          <NavLink to='/upcoming' activeStyle={{ color: 'red ', opacity: .6 }}>Upcoming</NavLink>
-        </li>
-        <li>
-          <NavLink to='/popular' activeStyle={{ color: 'red ', opacity: .6 }}>Popular</NavLink>
-        </li>
-        <li>
-          <NavLink to='/new' activeStyle={{ color: 'red ', opacity: .6 }}>New</NavLink>
-        </li>
+        {store.isSignedIn && store.username ? renderedAva() : ''}
+        {store.isSignedIn ? renderedLinks() : null}
         <li>
           {renderAuthButton()}
         </li>
       </ul>
-    </StyledLink>
+    </StyledLink >
   )
 }
 
